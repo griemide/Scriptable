@@ -1,0 +1,12 @@
+{
+  "always_run_in_app" : false,
+  "icon" : {
+    "color" : "deep-blue",
+    "glyph" : "clock"
+  },
+  "name" : "Wie lange bis Mitternacht",
+  "script" : "\/\/ This example shows how to load HTML into a web view. You can also load both CSS styling and JavaScript into the web view.\n\/\/ Web views can be displayed in a Siri Shortcut.\n\/\/ Note that this example uses the loadHTML() function of the WebView bridge. However, typically you would store your HTML and assets in the Scriptable folder in iCloud Drive and edit your HTML files using a suitable app, eg. Textastic. Then you can use the loadFile() function on the web view to load the HTML file.\nlet html = `\n<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0;\"\/>\n<style>\nbody {\n  font-family: -apple-system;\n  height: 100%;\n}\n#container {\n  display: table;\n  width: 100%;\n  height: 100%;\n}\n#countdown {\n  text-align: center;\n  font-size: 20pt;\n  min-height: 10em;\n  display: table-cell;\n  vertical-align: middle;\n}\n<\/style>\n<div id=\"container\">\n  <div id=\"countdown\"><\/div>\n<\/div>\n<script>\n\/\/ Date we want to countdown to\nlet targetDate = new Date()\ntargetDate.setHours(24, 0, 0, 0)\nlet targetTime = targetDate.getTime()\n\/\/ Create a timer that updates every second\nlet timer = setInterval(function() {\n  var now = new Date().getTime()\n  let distance = targetTime - now;\n  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) \/ (1000 * 60 * 60))\n  let minutes = Math.floor((distance % (1000 * 60 * 60)) \/ (1000 * 60))\n  let seconds = Math.floor((distance % (1000 * 60)) \/ 1000)\n  \/\/ Update the element with id=\"countdown\"\n  let e = document.getElementById(\"countdown\")\n  e.innerHTML = \"\"\n    + hours + \"h \"\n    + minutes + \"m \" + seconds + \"s \"\n    + \" <br>bis Mitternacht\"\n  if (distance < 0) {\n    clearInterval(timer)\n  }\n}, 1000)\n<\/script>\n`\nWebView.loadHTML(html, null, new Size(0, 100))\n\/\/ It is good practice to call Script.complete() at the end of a script, especially when the script is used with Siri or in the Shortcuts app. This lets Scriptable report the results faster. Please see the documentation for details.\nScript.complete()",
+  "share_sheet_inputs" : [
+
+  ]
+}
